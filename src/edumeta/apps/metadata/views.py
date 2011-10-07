@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from models import *
 from forms import *
 
+@login_required
 def metadata(request):
     institution_form = InstitutionForm()
     location_form = LocationForm()
