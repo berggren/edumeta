@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <title>eduroam metadata management</title>
+    <link rel='stylesheet' href='/site_media/css/bootstrap.min.css' type='text/css'>
+    <link rel='stylesheet' href='/site_media/css/style.css' type='text/css'>
+	<script type="text/javascript" language="javascript" src="/site_media/js/jquery-1.4.2.min.js"></script>
+	{% block extrahead %}{% endblock %}
+</head>
+
+<body {% block extrabody %}{% endblock %}>
+<div class="topbar-wrapper" style="z-index: 5;">
+  <div class="topbar">
+    <div class="fill">
+      <div class="container">
+        <h3><a href="/">eduroam metadata management</a></h3>
+        <ul class="secondary-nav">
+          <li>
+            <a href="/accounts/logout" class="menu">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+{% block content %}{% endblock %}
+</body>
+</html>

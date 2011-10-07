@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+    <div class="span16" columns>
+    <br>
+    <div class="welll">
+        {% if not institution %}
+            <h6>No site information</h6>
+            <button onclick="$(this).next('div.#hidetext').toggle('fast')" class="btn primary">Add site info</button>
+            <div id="hidetext" style="display:none;">
+                <br><br>
+                <form action="/contact/" method="post">{% csrf_token %}
+                    {% for n in institution_form %}
+                    <label for="xlInput">{{ n.label }}</label>
+                    <div class="input">
+                        {{ n }}
+                    </div>
+                    <br>
+                    {% endfor %}
+                    <input class="btn" type="submit" value="Submit" />
+                </form>
+            </div>
+        {% else %}
+            <h2>{{ institution.org_name_sv }}</h2>
+            {{ institution.street }}, {{ institution.city }}<br>
+        {% endif %}
+    </div>
+
+    <br>
+
+    <div class="welll">
+        {% if not institution.location.all %}
+            <h6>No locations</h6>
+            <a onclick="$(this).next('div.#hidetext').toggle('fast')" href="#" class="btn primary">Add location</a>
+            <div id="hidetext" style="display:none;">
+                <br><br>
+                <form action="/contact/" method="post">{% csrf_token %}
+                    {% for n in location_form %}
+                    <label for="xlInput">{{ n.label }}</label>
+                    <div class="input">
+                        {{ n }}
+                    </div>
+                    <br>
+                    {% endfor %}
+                    <input class="btn" type="submit" value="Submit" />
+                </form>
+            </div>
+        {% else %}
+            <table>
+            <th>Location</th>
+            <th>AP:s</th>
+            <th>IPv6</th>
+
+            {% for location in institution.location.all %}
+                <tr>
+                    <td>{{ location.location_name }}</td>
+                    <td>{{ location.ap_no }}</td>
+                    <td>{{ location.ipv6 }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+            <a onclick="$(this).next('div.#hidetext').toggle('fast')" href="#" class="btn success">+ Add location</a>
+            <div id="hidetext" style="display:none;">
+                <br><br>
+                <form action="/contact/" method="post">{% csrf_token %}
+                    {% for n in location_form %}
+                    <label for="xlInput">{{ n.label }}</label>
+                    <div class="input">
+                        {{ n }}
+                    </div>
+                    <br>
+                    {% endfor %}
+                    <input class="btn" type="submit" value="Submit" />
+                </form>
+            </div>
+
+        {% endif %}
+    </div>
+    </div>
+    </div>
+
+{% endblock %}
