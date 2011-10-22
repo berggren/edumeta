@@ -6,7 +6,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'apps.metadata.views.metadata'),
+    (r'^$',                             'apps.metadata.views.index'),
+    (r'^location/add$',                 'apps.metadata.views.location'),
+    (r'^location/(?P<id>[0-9]+)$',      'apps.metadata.views.location'),
+    (r'^institution/add$',              'apps.metadata.views.institution'),
+    (r'^institution/(?P<id>[0-9]+)$',   'apps.metadata.views.institution'),
+
     # Examples:
     # url(r'^$', 'edumeta.views.home', name='home'),
     # url(r'^edumeta/', include('edumeta.foo.urls')),

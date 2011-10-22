@@ -2,18 +2,18 @@
 
 {% block content %}
 
-    
-    <h2>{{ location.location_name }}</h2>
+    <h2>{{ institution.org_name_sv }}</h2>
                 <br>
-                <form action="/location/{{ location.id }}" method="post">{% csrf_token %}
+                <form action="/institution/{{ institution.id }}" method="post">{% csrf_token %}
                     {% for n in form %}
                     <label for="xlInput">{{ n.label }}</label>
                     <div class="input">
+                        {{ n.errors }}
                         {{ n }}
                     </div>
                     <br>
                     {% endfor %}
                     <input class="btn" type="submit" value="Submit" />
                 </form>
-  
+
 {% endblock %}
