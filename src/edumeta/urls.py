@@ -1,9 +1,16 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.auth.views import login, logout
+from tastypie.api import Api
+from api import InstitutionResource, LocationResource
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+
 admin.autodiscover()
+
+v1_api = Api(api_name='v1')
+v1_api.register(InstitutionResource())
+v1_api.register(LocationResource())
 
 urlpatterns = patterns('',
     (r'^$',                             'apps.metadata.views.index'),
@@ -11,6 +18,8 @@ urlpatterns = patterns('',
     (r'^location/(?P<id>[0-9]+)$',      'apps.metadata.views.location'),
     (r'^institution/add$',              'apps.metadata.views.institution'),
     (r'^institution/(?P<id>[0-9]+)$',   'apps.metadata.views.institution'),
+
+    (r'^api/',                          include(v1_api.urls)),
 
     # Examples:
     # url(r'^$', 'edumeta.views.home', name='home'),
