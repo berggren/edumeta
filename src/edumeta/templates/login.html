@@ -1,13 +1,27 @@
-{% extends "base.html" %}
+<!doctype html>
+<html>
+<head>
+    <title>eduroam metadata management</title>
+    <link rel='stylesheet' href='/site_media/css/bootstrap.min.css' type='text/css'>
+    <link rel='stylesheet' href='/site_media/css/style.css' type='text/css'>
+	<script type="text/javascript" language="javascript" src="/site_media/js/jquery-1.4.2.min.js"></script>
+	{% block extrahead %}{% endblock %}
+</head>
 
-{% block content %}
-<div class="container">
-<div class="span10" columns>
+<body {% block extrabody %}{% endblock %}>
 <br><br>
-<h1>eduroam metadata management</h1>
-<br>
-<a href="/accounts/login-federated/?next=/institution" class="btn success">Login</a>
+    <div class="container">
+    <div class="span16" columns>
+    <br><br>
+        <div class="container">
+        <div class="span10" columns>
+        <br><br>
+        <h1>eduroam metadata management</h1>
+        <br>
+        <a href="/accounts/login-federated/?next=/" class="btn success">Login</a>
+        </div>
+        </div>
 </div>
-</div>
-
-{% endblock %}
+    </div>
+</body>
+</html>
