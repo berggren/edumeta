@@ -9,7 +9,7 @@ from forms import *
 def index(request):
     form = InstitutionForm()
     location_form = LocationForm()
-    institutions = Institution.objects.all()
+    institutions = request.user.profile.institution.all()
     return render_to_response("metadata/index.html", {'form': form, 'institutions': institutions, 'location_form': location_form}, RequestContext(request))
 
 @login_required
@@ -26,7 +26,9 @@ def institution(request, id=None):
         else:
             form = InstitutionForm(request.POST)
         if form.is_valid():
-            form.save()
+            institution = form.save()
+            profile = request.user.profile
+            institution.userprofile_set.add(profile)
             return HttpResponseRedirect("/")
     return render_to_response("metadata/institution.html", {'form': form, 'institution': institution}, RequestContext(request))
 
