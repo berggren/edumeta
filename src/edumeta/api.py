@@ -19,6 +19,6 @@ class LocationResource(ModelResource):
     class Meta:
         queryset = Location.objects.all()
         resource_name = 'location'
-        allowed_methods = ['get']
+        allowed_methods = ['get', 'post']
         #authorization = Authorization()
         #authentication = ApiKeyAuthentication()

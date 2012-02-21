@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from apps.metadata.models import *
+from apps.metadata.models import Location, Institution
 
 class InstitutionForm(ModelForm):
     class Meta:
@@ -9,3 +9,4 @@ class InstitutionForm(ModelForm):
 class LocationForm(ModelForm):
     class Meta:
         model = Location
+        #exclude = ('institution')

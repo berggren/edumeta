@@ -1,8 +1,5 @@
 {% extends "base.html" %}
-
 {% block content %}
-
-
         {% if not institutions %}
             <h6>No institution found</h6>
             <button onclick="$(this).next('div.#hidetext').toggle('fast')" class="btn success">+ Add institution</button>
@@ -24,17 +21,16 @@
             {% for institution in institutions %}
                 <h2>{{ institution.org_name_sv }}</h2>
                 {{ institution.street }}, {{ institution.city }} <a href="/institution/{{ institution.id }}">Edit</a><br>
-
             <br>
 
-            {% if institution.location.all %}
+            {% if institution.get_locations %}
                 <table>
                 <th>Location</th>
                 <th>Street</th>
                 <th>City</th>
                 <th>AP:s</th>
                 <th></th>
-            {% for location in institution.location.all %}
+            {% for location in institution.get_locations %}
                 <tr>
                     <td>{{ location.location_name }}</td>
                     <td>{{ location.street }}</td>
@@ -59,10 +55,10 @@
                     <input class="btn" type="submit" value="Submit" />
                 </form>
             </div>
-            {% endfor %}
             <br><br><br>
-            <iframe width="940" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Tulegatan,+Stockholm,+Sverige&amp;aq=0&amp;sll=37.0625,-95.677068&amp;sspn=49.310476,93.076172&amp;vpsrc=0&amp;ie=UTF8&amp;hq=&amp;hnear=Tulegatan,+Stockholm,+Stockholms+L%C3%A4n,+Sweden&amp;t=m&amp;ll=59.344176,18.060322&amp;spn=0.015317,0.053644&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Tulegatan,+Stockholm,+Sverige&amp;aq=0&amp;sll=37.0625,-95.677068&amp;sspn=49.310476,93.076172&amp;vpsrc=0&amp;ie=UTF8&amp;hq=&amp;hnear=Tulegatan,+Stockholm,+Stockholms+L%C3%A4n,+Sweden&amp;t=m&amp;ll=59.344176,18.060322&amp;spn=0.015317,0.053644&amp;z=14&amp;iwloc=A" style="color:#0000FF;text-align:left">View Larger Map</a></small>
+            {% endfor %}
 
+            <!-- <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Tulegatan,+Stockholm,+Sverige&amp;aq=0&amp;sll=37.0625,-95.677068&amp;sspn=49.310476,93.076172&amp;vpsrc=0&amp;ie=UTF8&amp;hq=&amp;hnear=Tulegatan,+Stockholm,+Stockholms+L%C3%A4n,+Sweden&amp;t=m&amp;ll=59.344176,18.060322&amp;spn=0.015317,0.053644&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Tulegatan,+Stockholm,+Sverige&amp;aq=0&amp;sll=37.0625,-95.677068&amp;sspn=49.310476,93.076172&amp;vpsrc=0&amp;ie=UTF8&amp;hq=&amp;hnear=Tulegatan,+Stockholm,+Stockholms+L%C3%A4n,+Sweden&amp;t=m&amp;ll=59.344176,18.060322&amp;spn=0.015317,0.053644&amp;z=14&amp;iwloc=A" style="color:#0000FF;text-align:left">View Larger Map</a></small> -->
         {% endif %}
 
 

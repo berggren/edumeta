@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    
     <h2>{{ location.location_name }}</h2>
                 <br>
                 <form action="/location/{{ location.id }}" method="post">{% csrf_token %}
@@ -15,5 +13,4 @@
                     {% endfor %}
                     <input class="btn" type="submit" value="Submit" />
                 </form>
-  
 {% endblock %}

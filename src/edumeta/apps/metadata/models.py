@@ -1,6 +1,31 @@
 from django.db import models
 
+class Institution(models.Model):
+    realm = models.CharField(max_length=255)
+    contact_name = models.CharField(max_length=255)
+    contact_email = models.EmailField(),
+    contact_phone = models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
+    type = models.IntegerField()
+    org_name_sv = models.CharField(max_length=255)
+    org_name_en = models.CharField(max_length=255)
+    street = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    info_url_sv = models.URLField()
+    info_url_en = models.URLField()
+    policy_url_sv = models.URLField()
+    policy_url_en = models.URLField()
+    time_created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+    def __unicode__(self):
+        return '%s' % self.org_name_sv
+    def get_locations(self):
+        return Location.objects.filter(institution=self)
+    class Admin:
+        pass
+
 class Location(models.Model):
+    institution = models.ForeignKey(Institution)
     location_name = models.CharField(max_length=255)
     contact_name = models.CharField(max_length=255)
     contact_email = models.EmailField()
@@ -23,28 +48,5 @@ class Location(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     def __unicode__(self):
         return '%s' % self.location_name
-    class Admin:
-        pass
-
-class Institution(models.Model):
-    realm = models.CharField(max_length=255)
-    contact_name = models.CharField(max_length=255)
-    contact_email = models.EmailField(),
-    contact_phone = models.CharField(max_length=255)
-    country = models.CharField(max_length=255)
-    type = models.IntegerField()
-    org_name_sv = models.CharField(max_length=255)
-    org_name_en = models.CharField(max_length=255)
-    street = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    info_url_sv = models.URLField()
-    info_url_en = models.URLField()
-    policy_url_sv = models.URLField()
-    policy_url_en = models.URLField()
-    location = models.ManyToManyField(Location)
-    time_created = models.DateTimeField(auto_now_add=True)
-    last_updated = models.DateTimeField(auto_now=True)
-    def __unicode__(self):
-        return '%s' % self.org_name_sv
     class Admin:
         pass
