@@ -3,21 +3,6 @@
 {% block content %}
         {% if not institutions %}
             <h6>No institution found</h6>
-            <button onclick="$(this).next('div.#hidetext').toggle('fast')" class="btn success">+ Add institution</button>
-            <div id="hidetext" style="display:none;">
-                <br><br>
-                <form action="/institution/add" method="post">{% csrf_token %}
-                    {% for n in form %}
-                    <label>{{ n.label }}</label>
-                    <div class="input">
-                        {{ n.errors }}
-                        {{ n }}
-                    </div>
-                    <br>
-                    {% endfor %}
-                    <input class="btn" type="submit" value="Submit" />
-                </form>
-            </div>
         {% else %}
             {% for institution in institutions %}
                 <h3>{{ institution.org_name_sv }}</h3>
