@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %}edumeta API{% endblock %}
+{% block content %}
+    Username: {{ user.username }}
+    <br>
+    Key: <i>{{ user.profile.get_apikey }}</i>
+    <br>
+    <br>
+    <table class="table table-striped table-bordered">
+        <th>Resource</th>
+        <th>Method</th>
+        <th>Description</th>
+        <tr>
+            <td>/institution/</td>
+            <td>GET</td>
+            <td>Returns the users institutions. If more then one is returned, the result will be paginated.<br>The result will be limited to institutions that the user is member of.</td>
+        </tr>
+        <tr>
+            <td>/institution/<i>id</i>/</td>
+            <td>GET</td>
+            <td>Returns a detailted result of a specific institution</td>
+        </tr>
+        <tr>
+            <td>/location/</td>
+            <td>GET</td>
+            <td>Returns the users locations. If more then one is returned, the result will be paginated.<br>The result will be limited to locations that are connected to one of the users institutions.</td>
+        </tr>
+        <tr>
+            <td>/location/<i>id</i>/</td>
+            <td>GET</td>
+            <td>Returns a detailed result of a specific location</td>
+        </tr>
+
+        <tr>
+            <td>/location/</td>
+            <td>POST</td>
+            <td>Create a new location with the supplied json-data</td>
+        </tr>
+
+        <tr>
+            <td>/location/<i>id</i>/</td>
+            <td>PUT</td>
+            <td>Updates a location with the supplied json-data</td>
+        </tr>
+        <tr>
+            <td>/location/<i>id</i>/</td>
+            <td>PATCH</td>
+            <td>Partial update of a location with the supplied json.data.<br>This is a efficient way of updating a location without posting all the data.</td>
+        </tr>
+    </table>
+    <br><br>
+
+    <div class="row">
+        <div class="span6">
+            <h3>GET /institution/</h3>
+            <p>
+                Returns the users institutions. If more then one is returned, the result will be paginated.<br>The result will be limited to institutions that the user har rights to see and operate on.
+            </p>
+            <strong>Example Python</strong>
+            <pre>
+import requests
+import json
+url = 'https://edumeta.example.com/api/v1/institution/'
+headers = {
+    'content-type': 'application/json',
+    'x-edumeta-username': '<i>username</i>',
+    'x-edumeta-api-key': '<i>api-key</i>'
+}
+requests.get(<i>url</i>, headers=headers, verify=True)
+            </pre>
+        </div>
+
+        <div class="span6">
+            <h3 style="color:#999">Example result</h3>
+	        <pre style="background:#fff;color:#000;border:0;">
+{
+    "meta": {
+        "previous": null,
+        "total_count": 1,
+        "offset": 0,
+        "limit": 20,
+        "next": null
+    },
+    "objects": [
+        {
+            "city": "Stockholm",
+            "policy_url_en": "http://example.com/eduroam/",
+            "last_updated": "2012-03-03T16:39:53.578508",
+            "country": "se",
+            "info_url_en": "http://example.com/eduroam",
+            "org_name_sv": "Example Org",
+            "type": 3,
+            "street": "Street 1",
+            "org_name_en": "Example Org",
+            "policy_url_sv": "http://example.com/eduroam/",
+            "info_url_sv": "http://example.com/eduroam",
+            "contact_name": "Example Helpdesk",
+            "realm": "example.com",
+            "contact_phone": "555-1234",
+            "resource_uri": "/api/v1/institution/1/"
+        }
+    ]
+}
+            </pre>
+
+        </div>
+
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="span6">
+            <h3>GET /institution/<i>id</i>/</h3>
+            <p>
+                Returns a detailted result of a specific institution
+            </p>
+            <strong>Example Python</strong>
+            <pre>
+import requests
+import json
+url = 'https://edumeta.example.com/api/v1/institution/<i>id</i>/'
+headers = {
+    'content-type': 'application/json',
+    'x-edumeta-username': '<i>username</i>',
+    'x-edumeta-api-key': '<i>api-key</i>'
+}
+requests.get(<i>url</i>, headers=headers, verify=True)
+            </pre>
+        </div>
+
+        <div class="span6">
+            <h3 style="color:#999">Example result</h3>
+	        <pre style="background:#fff;color:#000;border:0;">
+
+
+            </pre>
+
+        </div>
+
+    </div>
+    <hr>
+
+    
+    <div class="row">
+        <div class="span6">
+            <h3>GET /location/</h3>
+            <p>
+                Returns the users locations. If more then one is returned, the result will be paginated.<br>The result will be limited to locations that are connected to one of the users institutions.
+            </p>
+            <strong>Example Python</strong>
+            <pre>
+import requests
+import json
+url = 'https://edumeta.example.com/api/v1/location/'
+headers = {
+    'content-type': 'application/json',
+    'x-edumeta-username': '<i>username</i>',
+    'x-edumeta-api-key': '<i>api-key</i>'
+}
+requests.get(<i>url</i>, headers=headers, verify=True)
+            </pre>
+        </div>
+
+        <div class="span6">
+            <h3 style="color:#999">Example result</h3>
+	        <pre style="background:#fff;color:#000;border:0;">
+{
+  "meta": {
+    "previous": null,
+    "total_count": 4,
+    "offset": 0,
+    "limit": 20,
+    "next": null
+  },
+  "objects": [
+    {
+      "street": "Street 1",
+      "contact_name": "example Helpdesk",
+      "id": "1",
+      "city": "Stockholm",
+      "location_name": "Street",
+      "ssid": "eduroam",
+      "nat": false,
+      "ipv6": true,
+      "latitude": "xx.xxxxx",
+      "contact_phone": "555-1234",
+      "ap_no": 4711,
+      "info_url_en": "http://www.example.com/eduroam",
+      "wired": false,
+      "enc_level": "wpa2",
+      "contact_email": "helpdesk@example.com",
+      "port_restrict": false,
+      "institution": "/api/v1/institution/1/",
+      "transp_proxy": false,
+      "longitude": "xx.xxxxx",
+      "info_url_sv": "http://www.example.org/eduroam",
+      "resource_uri": "/api/v1/location/1/"
+    }
+            </pre>
+        </div>
+    </div>
+{% endblock %}

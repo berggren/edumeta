@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from tastypie.models import ApiKey
 from edumeta.apps.metadata.models import Institution
 
 class UserProfile(models.Model):
@@ -7,6 +8,8 @@ class UserProfile(models.Model):
     institution = models.ManyToManyField(Institution, blank=True, null=True)
     time_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+    def get_apikey(self):
+        return ApiKey.objects.get(user=self.user).key
     def __unicode__(self):
         return '%s' % self.user
     class Admin:

@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>eduroam metadata management</title>
-    <link rel='stylesheet' href='/site_media/css/bootstrap.min.css' type='text/css'>
+    <link rel='stylesheet' href='/site_media/bootstrap/css/bootstrap.min.css' type='text/css'>
     <link rel='stylesheet' href='/site_media/css/style.css' type='text/css'>
 	<script type="text/javascript" language="javascript" src="/site_media/js/jquery-1.4.2.min.js"></script>
 	{% block extrahead %}{% endblock %}
@@ -10,18 +10,16 @@
 
 <body {% block extrabody %}{% endblock %}>
 <br><br>
-    <div class="container">
-    <div class="span16" columns>
-    <br><br>
-        <div class="container">
-        <div class="span10" columns>
-        <br><br>
-        <h1>eduroam metadata management</h1>
-        <br>
-        <a href="/accounts/login-federated/?next=/" class="btn success">Login</a>
+<div class="container">
+    <div class="span12">
+        <div class="row">
+            <div class="hero-unit">
+                <h1>eduroam metadata</h1>
+                <br><br>
+                <a href="/accounts/login-federated/?next=/" class="btn-large btn-success">Login</a>
+            </div>
         </div>
-        </div>
-</div>
     </div>
+</div>
 </body>
 </html>

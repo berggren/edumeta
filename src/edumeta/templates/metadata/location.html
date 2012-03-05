@@ -1,16 +1,17 @@
 {% extends "base.html" %}
-
+{% block title %}Edit location{% endblock %}
 {% block content %}
-    <h2>{{ location.location_name }}</h2>
+    <h3>{{ location.location_name }}</h3>
                 <br>
+                <div class="well">
                 <form action="/location/{{ location.id }}" method="post">{% csrf_token %}
                     {% for n in form %}
-                    <label for="xlInput">{{ n.label }}</label>
+                    <label>{{ n.label }}</label>
                     <div class="input">
                         {{ n }}
                     </div>
-                    <br>
                     {% endfor %}
                     <input class="btn" type="submit" value="Submit" />
                 </form>
+                </div>
 {% endblock %}

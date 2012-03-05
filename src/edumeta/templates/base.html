@@ -2,20 +2,28 @@
 <html>
 <head>
     <title>eduroam metadata management</title>
-    <link rel='stylesheet' href='/site_media/css/bootstrap.min.css' type='text/css'>
+    <link rel='stylesheet' href='/site_media/bootstrap/css/bootstrap.min.css' type='text/css'>
     <link rel='stylesheet' href='/site_media/css/style.css' type='text/css'>
 	<script type="text/javascript" language="javascript" src="/site_media/js/jquery-1.4.2.min.js"></script>
 	{% block extrahead %}{% endblock %}
 </head>
-
 <body {% block extrabody %}{% endblock %}>
 <br><br>
-    <div class="container">
-    <div class="span16" columns>
-    <br><br>
-    <img src="{{ MEDIA_URL }}img/eduroam_120pix.png" style="float:right;">
-{% block content %}{% endblock %}
-</div>
+<div class="container">
+    <div class="span12" columns>
+        <div class="row">
+            <a href="/"><img src="{{ MEDIA_URL }}img/eduroam_120pix.png" style="float:left;margin-right:10px;"></a>
+            <h1 style="margin-top:9px;">{% block title %}{% endblock %}</h1>
+            <br>
+            <hr>
+            {% block content %}{% endblock %}
+        </div>
+        <div class="row">
+            <hr>
+            {{ user.get_full_name }} | <a href="/developer/api">Information about the API</a>
+        </div>
+        <br><br>
     </div>
+</div>
 </body>
 </html>
