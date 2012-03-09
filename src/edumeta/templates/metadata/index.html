@@ -8,6 +8,38 @@
                 <h3>{{ institution.org_name_sv }}</h3>
                 {{ institution.street }}, {{ institution.city }} <a href="/institution/{{ institution.id }}">Edit</a><br>
             <br>
+                {% if institution.get_contacts %}
+                <table class="table table-striped table-bordered">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th></th>
+                {% for contact in institution.get_contacts %}
+                    <tr>
+                        <td>{{ contact.name }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td>{{ contact.phone }}</td>
+                        <td><a href="/contact/{{ contact.id }}">Edit</a></td>
+                    </tr>
+                {% endfor %}
+                {% endif %}
+                <a onclick="$(this).next('div.#hidetext').toggle('fast')" href="#" class="btn">+ Add contact</a>
+                <div id="hidetext" style="display:none;">
+                    <br><br>
+                    <div class="well">
+                        <form action="/contact/add" method="post">{% csrf_token %}
+                            {% for n in contact_form %}
+                                <label>{{ n.label }}</label>
+                                {{ n }}
+                            {% endfor %}
+                            <br><br>
+                            <input class="btn" type="submit" value="Save" />
+                            <input class="btn" type="reset" value="Reset form" />
+                        </form>
+                    </div>
+                </div>
+                <br><br>
+
             {% if institution.get_locations %}
                 <table class="table table-striped table-bordered">
                 <th>Location</th>

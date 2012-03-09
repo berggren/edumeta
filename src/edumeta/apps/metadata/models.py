@@ -2,9 +2,6 @@ from django.db import models
 
 class Institution(models.Model):
     realm = models.CharField(max_length=255)
-    contact_name = models.CharField(max_length=255)
-    contact_email = models.EmailField(),
-    contact_phone = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
     type = models.IntegerField()
     org_name_sv = models.CharField(max_length=255)
@@ -21,15 +18,26 @@ class Institution(models.Model):
         return '%s' % self.org_name_sv
     def get_locations(self):
         return Location.objects.filter(institution=self)
+    def get_contacts(self):
+        return Contact.objects.filter(institution=self)
+    class Admin:
+        pass
+
+class Contact(models.Model):
+    institution = models.ForeignKey(Institution)
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone = models.CharField(max_length=255)
+    time_created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+    def __unicode__(self):
+        return '%s - %s' % (self.institution, self.name)
     class Admin:
         pass
 
 class Location(models.Model):
     institution = models.ForeignKey(Institution)
     location_name = models.CharField(max_length=255)
-    contact_name = models.CharField(max_length=255)
-    contact_email = models.EmailField()
-    contact_phone = models.CharField(max_length=255)
     longitude = models.CharField(max_length=255)
     latitude = models.CharField(max_length=255)
     street = models.CharField(max_length=255)

@@ -1,17 +1,14 @@
 {% extends "base.html" %}
-{% block title %}Edit institution{% endblock %}
+{% block title %}Edit contact{% endblock %}
 {% block content %}
-    <h3>{{ institution.org_name_sv }}</h3>
-    <br>
                 <div class="well">
-                <form action="/institution/{{ institution.id }}" method="post">{% csrf_token %}
+                <form action="/contact/{{ contact.id }}" method="post">{% csrf_token %}
                     {% for n in form %}
                     <label>{{ n.label }}</label>
                         {{ n.errors }}
                         {{ n }}
                     {% endfor %}
-                    <br>
-                    <input class="btn" type="submit" value="Save" />
+                    <input class="btn" type="submit" value="Submit" />
                 </form>
                 </div>
 {% endblock %}

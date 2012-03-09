@@ -1,12 +1,15 @@
 from django.forms import ModelForm
-from apps.metadata.models import Location, Institution
+from apps.metadata.models import Location, Institution, Contact
 
 class InstitutionForm(ModelForm):
     class Meta:
         model = Institution
-        exclude = ('contact', 'location')
+        exclude = ('contact', 'location', 'type')
 
 class LocationForm(ModelForm):
     class Meta:
         model = Location
-        #exclude = ('institution')
+
+class ContactForm(ModelForm):
+    class Meta:
+        model = Contact

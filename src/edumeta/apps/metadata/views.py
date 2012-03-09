@@ -2,7 +2,6 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from tastypie.models import ApiKey
 from models import *
 from forms import *
 
@@ -12,7 +11,9 @@ def index(request):
     institutions = request.user.profile.institution.all()
     location_form = LocationForm()
     location_form.fields["institution"].queryset = institutions
-    return render_to_response("metadata/index.html", {'form': form, 'institutions': institutions, 'location_form': location_form}, RequestContext(request))
+    contact_form = ContactForm()
+    contact_form.fields["institution"].queryset = institutions
+    return render_to_response("metadata/index.html", {'form': form, 'institutions': institutions, 'location_form': location_form, 'contact_form': contact_form}, RequestContext(request))
 
 @login_required
 def institution(request, id=None):
@@ -35,6 +36,26 @@ def institution(request, id=None):
             institution.userprofile_set.add(profile)
             return HttpResponseRedirect("/")
     return render_to_response("metadata/institution.html", {'form': form, 'institution': institution}, RequestContext(request))
+
+@login_required
+def contact(request, id=None):
+    if id:
+        contact = Contact.objects.get(pk=id)
+        form = ContactForm(instance=contact)
+        if not contact.institution in request.user.profile.institution.all():
+            raise Http404
+    else:
+        form = ContactForm()
+    if request.method == "POST":
+        if id:
+            contact = Contact.objects.get(pk=id)
+            form = ContactForm(request.POST, instance=contact)
+        else:
+            form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect("/")
+    return render_to_response("metadata/contact.html", {'form': form, 'contact': contact}, RequestContext(request))
 
 @login_required
 def location(request, id=None):

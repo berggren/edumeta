@@ -3,7 +3,7 @@ from tastypie import fields
 from tastypie.authorization import Authorization
 from tastypie.authentication import ApiKeyAuthentication
 from tastypie.resources import ModelResource
-from apps.metadata.models import Institution, Location
+from apps.metadata.models import Institution, Location, Contact
 
 class HeaderApiKeyAuthentication(ApiKeyAuthentication):
     def is_authenticated(self, request, **kwargs):
@@ -43,6 +43,15 @@ class InstitutionResource(ModelResource):
         authorization = EdumetaAuthorization()
         def get_object_list(self, request):
             return request.user.institutions.all()
+
+class ContactResource(ModelResource):
+    institution = fields.ForeignKey(InstitutionResource, 'institution', full=True)
+    class Meta:
+        queryset = Contact.objects.all()
+        resource_name = 'contact'
+        allowed_methods = ['get', 'post', 'put', 'patch']
+        authentication = HeaderApiKeyAuthentication()
+        authorization = EdumetaAuthorization()
 
 class LocationResource(ModelResource):
     institution = fields.ForeignKey(InstitutionResource, 'institution', full=False)
