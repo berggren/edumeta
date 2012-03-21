@@ -25,5 +25,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     (r'^accounts/login/$', login,       {'template_name': "login.html"}),
-    (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/jbn/stuff/work/code/edumeta/src/edumeta/static', 'show_indexes': True}),
+    (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/jbn/stuff/work/code/edumeta/meta/static', 'show_indexes': True}),
 )

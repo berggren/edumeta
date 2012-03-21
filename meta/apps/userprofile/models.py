@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from tastypie.models import ApiKey
-from edumeta.apps.metadata.models import Institution
+from apps.metadata.models import Institution
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
