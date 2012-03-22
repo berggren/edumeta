@@ -67,4 +67,4 @@ class PublicLocationResource(ModelResource):
         queryset = Location.objects.all()
         resource_name = 'locations'
         allowed_methods = ['get']
-        fields = ['ap_no', 'name', 'longitude', 'latitude']
+        fields = ['ap_no', 'location_name', 'longitude', 'latitude']
