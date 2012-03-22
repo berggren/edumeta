@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.auth.views import login, logout
 from tastypie.api import Api
-from api import InstitutionResource, LocationResource, ContactResource
+from api import InstitutionResource, LocationResource, ContactResource, PublicLocationResource
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -11,6 +11,7 @@ v1_api = Api(api_name='v1')
 v1_api.register(InstitutionResource())
 v1_api.register(ContactResource())
 v1_api.register(LocationResource())
+v1_api.register(PublicLocationResource())
 
 urlpatterns = patterns('',
     (r'^$',                             'apps.metadata.views.index'),

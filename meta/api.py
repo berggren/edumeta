@@ -61,3 +61,10 @@ class LocationResource(ModelResource):
         allowed_methods = ['get', 'post', 'put', 'patch']
         authentication = HeaderApiKeyAuthentication()
         authorization = EdumetaAuthorization()
+
+class PublicLocationResource(ModelResource):
+    class Meta:
+        queryset = Location.objects.all()
+        resource_name = 'locations'
+        allowed_methods = ['get']
+        fields = ['ap_no', 'name', 'longitude', 'latitude']
