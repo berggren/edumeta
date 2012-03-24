@@ -1,9 +1,16 @@
+from django.db.models.aggregates import Sum
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from models import *
 from forms import *
+
+def login(request):
+    institutions = Institution.objects.all()
+    locations = Location.objects.all()
+    ap_no = Location.objects.all().aggregate(Sum('ap_no'))['ap_no__sum']
+    return render_to_response("login.html", {'institutions': institutions, 'locations': locations, 'ap_no': ap_no})
 
 @login_required
 def index(request):
@@ -39,13 +46,16 @@ def institution(request, id=None):
 
 @login_required
 def contact(request, id=None):
+    institutions = request.user.profile.institution.all()
     if id:
         contact = Contact.objects.get(pk=id)
         form = ContactForm(instance=contact)
+        form.fields["institution"].queryset = institutions
         if not contact.institution in request.user.profile.institution.all():
             raise Http404
     else:
         form = ContactForm()
+        form.fields["institution"].queryset = institutions
     if request.method == "POST":
         if id:
             contact = Contact.objects.get(pk=id)

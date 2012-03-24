@@ -1,17 +1,20 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.auth.views import login, logout
 from tastypie.api import Api
-from api import InstitutionResource, LocationResource, ContactResource, PublicLocationResource
+from api_v1 import InstitutionResource as InstitutionResource_v1
+from api_v1 import LocationResource as LocationResource_v1
+from api_v1 import ContactResource as ContactResource_v1
+from api_v1 import PublicLocationResource as PublicLocationResource_v1
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
 v1_api = Api(api_name='v1')
-v1_api.register(InstitutionResource())
-v1_api.register(ContactResource())
-v1_api.register(LocationResource())
-v1_api.register(PublicLocationResource())
+v1_api.register(InstitutionResource_v1())
+v1_api.register(ContactResource_v1())
+v1_api.register(LocationResource_v1())
+v1_api.register(PublicLocationResource_v1())
 
 urlpatterns = patterns('',
     (r'^$',                             'apps.metadata.views.index'),
@@ -25,6 +28,7 @@ urlpatterns = patterns('',
     (r'^api/',                          include(v1_api.urls)),
 
     url(r'^admin/', include(admin.site.urls)),
-    (r'^accounts/login/$', login,       {'template_name': "login.html"}),
+    #(r'^accounts/login/$', login,       {'template_name': "login.html"}),
+    (r'^accounts/login/$',       'apps.metadata.views.login'),
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/jbn/stuff/work/code/edumeta/meta/static', 'show_indexes': True}),
 )

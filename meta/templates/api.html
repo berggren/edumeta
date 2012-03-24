@@ -51,12 +51,12 @@
     <br><br>
 
     <div class="row">
-        <div class="span6">
             <h3>GET /institution/</h3>
             <p>
                 Returns the users institutions. If more then one is returned, the result will be paginated.<br>The result will be limited to institutions that the user har rights to see and operate on.
             </p>
             <strong>Example Python</strong>
+            <br><br>
             <pre>
 import requests
 import json
@@ -68,10 +68,7 @@ headers = {
 }
 requests.get(<i>url</i>, headers=headers, verify=True)
             </pre>
-        </div>
-
-        <div class="span6">
-            <h3 style="color:#999">Example result</h3>
+            <strong>Result</strong>
 	        <pre style="background:#fff;color:#000;border:0;">
 {
     "meta": {
@@ -105,16 +102,15 @@ requests.get(<i>url</i>, headers=headers, verify=True)
 
         </div>
 
-    </div>
     <hr>
 
     <div class="row">
-        <div class="span6">
             <h3>GET /institution/<i>id</i>/</h3>
             <p>
                 Returns a detailted result of a specific institution
             </p>
             <strong>Example Python</strong>
+            <br><br>
             <pre>
 import requests
 import json
@@ -126,24 +122,20 @@ headers = {
 }
 requests.get(<i>url</i>, headers=headers, verify=True)
             </pre>
-        </div>
-
-        <div class="span12">
-            <h3 style="color:#999">Example result</h3>
+            <strong>Result</strong>
 	        <pre style="background:#fff;color:#000;border:0;">
             </pre>
         </div>
-    </div>
     <hr>
 
     
     <div class="row">
-        <div class="span6">
             <h3>GET /location/</h3>
             <p>
                 Returns the users locations. If more then one is returned, the result will be paginated.<br>The result will be limited to locations that are connected to one of the users institutions.
             </p>
             <strong>Example Python</strong>
+            <br><br>
             <pre>
 import requests
 import json
@@ -157,7 +149,7 @@ requests.get(<i>url</i>, headers=headers, verify=True)
             </pre>
         </div>
 
-            <h3 style="color:#999">Example result</h3>
+            <strong>Result</strong>
 	        <pre style="background:#fff;color:#000;border:0;">
 {
   "meta": {
@@ -192,5 +184,4 @@ requests.get(<i>url</i>, headers=headers, verify=True)
       "resource_uri": "/api/v1/location/1/"
     }
             </pre>
-        </div>
 {% endblock %}

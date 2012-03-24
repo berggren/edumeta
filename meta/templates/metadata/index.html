@@ -5,9 +5,10 @@
             <h6>No institution found</h6>
         {% else %}
             {% for institution in institutions %}
-                <h3>{{ institution.org_name_sv }}</h3>
+                <div class="well" style="background: #fff;">
+                <h3>{{ institution.org_name_en }}</h3>
                 {{ institution.street }}, {{ institution.city }} <a href="/institution/{{ institution.id }}">Edit</a><br>
-            <br>
+                <br>
                 {% if institution.get_contacts %}
                 <table class="table table-striped table-bordered">
                 <th>Name</th>
@@ -49,7 +50,7 @@
                 <th></th>
             {% for location in institution.get_locations %}
                 <tr>
-                    <td>{{ location.location_name }}</td>
+                    <td>{% if location.location_name_se %}{{ location.location_name_se }}{% else %}{{ location.location_name_en }}{% endif %}</td>
                     <td>{{ location.street }}</td>
                     <td>{{ location.city }}</td>
                     <td>{{ location.ap_no }}</td>
@@ -74,9 +75,8 @@
                 </div>
             </div>
             <br><br><br>
+            </div>
             {% endfor %}
-
-            <!-- <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Tulegatan,+Stockholm,+Sverige&amp;aq=0&amp;sll=37.0625,-95.677068&amp;sspn=49.310476,93.076172&amp;vpsrc=0&amp;ie=UTF8&amp;hq=&amp;hnear=Tulegatan,+Stockholm,+Stockholms+L%C3%A4n,+Sweden&amp;t=m&amp;ll=59.344176,18.060322&amp;spn=0.015317,0.053644&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe><br /><small><a href="http://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Tulegatan,+Stockholm,+Sverige&amp;aq=0&amp;sll=37.0625,-95.677068&amp;sspn=49.310476,93.076172&amp;vpsrc=0&amp;ie=UTF8&amp;hq=&amp;hnear=Tulegatan,+Stockholm,+Stockholms+L%C3%A4n,+Sweden&amp;t=m&amp;ll=59.344176,18.060322&amp;spn=0.015317,0.053644&amp;z=14&amp;iwloc=A" style="color:#0000FF;text-align:left">View Larger Map</a></small> -->
         {% endif %}
 
 

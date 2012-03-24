@@ -1,10 +1,33 @@
 <!doctype html>
 <html>
 <head>
-    <title>eduroam metadata management</title>
+    <title>eduroam metadata</title>
     <link rel='stylesheet' href='/site_media/bootstrap/css/bootstrap.min.css' type='text/css'>
     <link rel='stylesheet' href='/site_media/css/style.css' type='text/css'>
 	<script type="text/javascript" language="javascript" src="/site_media/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPGA6QkWXoe9VqQ5fEXt2YGUs4FTiRsQ4&sensor=false"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var myOptions = {
+                center: new google.maps.LatLng(62.247466, 15.732422),
+                zoom: 5,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"),
+                    myOptions);
+            jQuery.getJSON("/api/v1/locations/?format=jsonp&callback=?&limit=0", function(data) {
+                $.each(data.objects, function() {
+                    var myLatlng = new google.maps.LatLng(this.latitude, this.longitude);
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        title:this.location_name_en + " - APs: " + this.ap_no
+                    });
+                });
+            });
+        });
+    </script>
 	{% block extrahead %}{% endblock %}
 </head>
 
@@ -13,12 +36,20 @@
 <div class="container">
     <div class="span12">
         <div class="row">
-            <div class="hero-unit">
-                <h1>eduroam metadata</h1>
+            <a href="/"><img src="/site_media/img/eduroam_120pix.png" style="float:left;margin-right:10px;"></a>
+            <h1 style="margin-top:9px;">eduroam in Sweden</h1>
+            <a style="float:right;" href="/accounts/login-federated/?next=/">Login</a>
+
+            <br><br>
+            <div class="well">
+                We have <span style="font-size: 2em;">{{ institutions|length }}</span> institutions, <span style="font-size: 2em;">{{ locations|length }}</span> locations with <span style="font-size: 3em;">{{ ap_no }}</span> accesspoint giving you love and connectivity through <span style="font-size: 2em;">eduroam</span>.
                 <br><br>
-                <a href="/accounts/login-federated/?next=/" class="btn-large btn-success">Login</a>
             </div>
         </div>
+        <div class="row">
+            <div id="map_canvas" style="width:100%; height:800px;"></div>
+        </div>
+        <br><br>
     </div>
 </div>
 </body>

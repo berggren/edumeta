@@ -15,12 +15,12 @@
             <a href="/"><img src="{{ MEDIA_URL }}img/eduroam_120pix.png" style="float:left;margin-right:10px;"></a>
             <h1 style="margin-top:9px;">{% block title %}{% endblock %}</h1>
             <br>
-            <hr>
+            <br>
             {% block content %}{% endblock %}
         </div>
         <div class="row">
             <hr>
-            {{ user.get_full_name }} | <a href="/developer/api">Information about the API</a>
+            <a href="/developer/api">Information about the API</a>
         </div>
         <br><br>
     </div>
