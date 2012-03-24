@@ -53,6 +53,7 @@ class Location(models.Model):
     wired = models.BooleanField()
     info_url_se = models.URLField(null=True, blank=True)
     info_url_en = models.URLField(null=True, blank=True)
+    area = models.TextField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
     def __unicode__(self):
