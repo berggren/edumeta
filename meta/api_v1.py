@@ -49,7 +49,7 @@ class ContactResource(ModelResource):
     class Meta:
         queryset = Contact.objects.all()
         resource_name = 'contact'
-        allowed_methods = ['get', 'post', 'put', 'patch']
+        allowed_methods = ['get', 'post', 'put', 'patch', 'delete']
         authentication = HeaderApiKeyAuthentication()
         authorization = EdumetaAuthorization()
 
@@ -58,7 +58,7 @@ class LocationResource(ModelResource):
     class Meta:
         queryset = Location.objects.all()
         resource_name = 'location'
-        allowed_methods = ['get', 'post', 'put', 'patch']
+        allowed_methods = ['get', 'post', 'put', 'patch', 'delete']
         authentication = HeaderApiKeyAuthentication()
         authorization = EdumetaAuthorization()
 
