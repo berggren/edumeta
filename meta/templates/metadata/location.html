@@ -4,6 +4,7 @@
     <h3>{{ location.location_name }}</h3>
                 <br>
                 <div class="well">
+                <a style="float:right;" href="/location/{{ location.id }}/delete"><i class="icon-trash"></i> Ta bort</a>
                 <form action="/location/{{ location.id }}" method="post">{% csrf_token %}
                     {% for n in form %}
                     <label>{{ n.label }}</label>

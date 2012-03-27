@@ -1,17 +1,84 @@
 {% extends "base.html" %}
-{% block title %}Edit institution{% endblock %}
+{% block title %}edumeta{% endblock %}
 {% block content %}
-    <h3>{{ institution.org_name_sv }}</h3>
-    <br>
+        {% if not institutions %}
+            <h6>No institution found</h6>
+        {% else %}
+            {% for institution in institutions %}
+                <div class="well" style="background: #fff;">
+                <h3>{{ institution.org_name_en }}</h3>
+                {{ institution.street }}, {{ institution.city }} <a href="/institution/{{ institution.id }}">Edit</a><br>
+                <br>
+                {% if institution.get_contacts %}
+                <table class="table table-striped table-bordered">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th></th>
+                {% for contact in institution.get_contacts %}
+                    <tr>
+                        <td>{{ contact.name }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td>{{ contact.phone }}</td>
+                        <td><a href="/contact/{{ contact.id }}">Edit</a></td>
+                    </tr>
+                {% endfor %}
+                {% endif %}
+                <a onclick="$(this).next('div.#hidetext').toggle('fast')" href="#" class="btn">+ Add contact</a>
+                <div id="hidetext" style="display:none;">
+                    <br><br>
+                    <div class="well">
+                        <form action="/contact/add" method="post">{% csrf_token %}
+                            {% for n in contact_form %}
+                                <label>{{ n.label }}</label>
+                                {{ n }}
+                            {% endfor %}
+                            <br><br>
+                            <input class="btn" type="submit" value="Save" />
+                            <input class="btn" type="reset" value="Reset form" />
+                        </form>
+                    </div>
+                </div>
+                <br><br>
+
+            {% if institution.get_locations %}
+                <table class="table table-striped table-bordered">
+                <th>Location</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>AP:s</th>
+                <th></th>
+            {% for location in institution.get_locations %}
+                <tr>
+                    <td>{% if location.location_name_se %}{{ location.location_name_se }}{% else %}{{ location.location_name_en }}{% endif %}</td>
+                    <td>{{ location.street }}</td>
+                    <td>{{ location.city }}</td>
+                    <td>{{ location.ap_no }}</td>
+                    <td><a href="/location/{{ location.id }}">Edit</a></td>
+                    <td><a href="/location/{{ location.id }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </table>
+            {% endif %}
+                <a onclick="$(this).next('div.#hidetext').toggle('fast')" href="#" class="btn success">+ Add location</a>
+            <div id="hidetext" style="display:none;">
+                <br><br>
                 <div class="well">
-                <form action="/institution/{{ institution.id }}" method="post">{% csrf_token %}
-                    {% for n in form %}
+                <form action="/location/add" method="post">{% csrf_token %}
+                    {% for n in location_form %}
                     <label>{{ n.label }}</label>
-                        {{ n.errors }}
                         {{ n }}
                     {% endfor %}
-                    <br>
+                    <br><br>
                     <input class="btn" type="submit" value="Save" />
+                    <input class="btn" type="reset" value="Reset form" />
                 </form>
                 </div>
+            </div>
+            <br><br><br>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+
 {% endblock %}

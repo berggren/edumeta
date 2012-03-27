@@ -1,83 +1,69 @@
-{% extends "base.html" %}
-{% block title %}edumeta{% endblock %}
-{% block content %}
-        {% if not institutions %}
-            <h6>No institution found</h6>
-        {% else %}
-            {% for institution in institutions %}
-                <div class="well" style="background: #fff;">
-                <h3>{{ institution.org_name_en }}</h3>
-                {{ institution.street }}, {{ institution.city }} <a href="/institution/{{ institution.id }}">Edit</a><br>
-                <br>
-                {% if institution.get_contacts %}
-                <table class="table table-striped table-bordered">
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th></th>
-                {% for contact in institution.get_contacts %}
-                    <tr>
-                        <td>{{ contact.name }}</td>
-                        <td>{{ contact.email }}</td>
-                        <td>{{ contact.phone }}</td>
-                        <td><a href="/contact/{{ contact.id }}">Edit</a></td>
-                    </tr>
-                {% endfor %}
-                {% endif %}
-                <a onclick="$(this).next('div.#hidetext').toggle('fast')" href="#" class="btn">+ Add contact</a>
-                <div id="hidetext" style="display:none;">
-                    <br><br>
-                    <div class="well">
-                        <form action="/contact/add" method="post">{% csrf_token %}
-                            {% for n in contact_form %}
-                                <label>{{ n.label }}</label>
-                                {{ n }}
-                            {% endfor %}
-                            <br><br>
-                            <input class="btn" type="submit" value="Save" />
-                            <input class="btn" type="reset" value="Reset form" />
-                        </form>
-                    </div>
-                </div>
-                <br><br>
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        #map_canvas { height: 100% }
+        #map_canvas img {
+            max-width: none;
+        }
+    </style>
+    <title>eduroam metadata</title>
+    <link rel='stylesheet' href='/site_media/bootstrap/css/bootstrap.min.css' type='text/css'>
+    <link rel='stylesheet' href='/site_media/css/style.css' type='text/css'>
+    <script type="text/javascript" language="javascript" src="/site_media/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPGA6QkWXoe9VqQ5fEXt2YGUs4FTiRsQ4&sensor=false"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var myOptions = {
+                center: new google.maps.LatLng(62.247466, 15.732422),
+                zoom: 4,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"),
+                    myOptions);
+            jQuery.getJSON("/api/v1/locations/?format=json&limit=0", function(data) {
+                $.each(data.objects, function() {
+                    var myLatlng = new google.maps.LatLng(this.latitude, this.longitude);
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        title:this.location_name_en + " - APs: " + this.ap_no
+                    });
+                });
+            });
+        });
+    </script>
+	{% block extrahead %}{% endblock %}
+</head>
 
-            {% if institution.get_locations %}
-                <table class="table table-striped table-bordered">
-                <th>Location</th>
-                <th>Street</th>
-                <th>City</th>
-                <th>AP:s</th>
-                <th></th>
-            {% for location in institution.get_locations %}
-                <tr>
-                    <td>{% if location.location_name_se %}{{ location.location_name_se }}{% else %}{{ location.location_name_en }}{% endif %}</td>
-                    <td>{{ location.street }}</td>
-                    <td>{{ location.city }}</td>
-                    <td>{{ location.ap_no }}</td>
-                    <td><a href="/location/{{ location.id }}">Edit</a></td>
-                </tr>
-            {% endfor %}
-            </table>
+<body {% block extrabody %}{% endblock %}>
+<br><br>
+
+<div class="container">
+    <div class="span12">
+        <div class="row">
+            <a href="/"><img src="/site_media/img/eduroam_120pix.png" style="float:left;margin-right:10px;"></a>
+            <h1 style="margin-top:9px;">eduroam in Sweden</h1>
+            {% if user.is_authenticated %}
+                <a style="float:right;" href="/accounts/logout">Logout</a>
+            {% else %}
+            <a style="float:right;" href="/accounts/login-federated/?next=/institution">Login</a>
             {% endif %}
-                <a onclick="$(this).next('div.#hidetext').toggle('fast')" href="#" class="btn success">+ Add location</a>
-            <div id="hidetext" style="display:none;">
+            <br><br>
+            <div class="well">
+                We have <span style="font-size: 2em;">{{ institutions|length }}</span> institutions, <span style="font-size: 2em;">{{ locations|length }}</span> locations with <span style="font-size: 3em;">{{ ap_no }}</span> accesspoints giving you love and connectivity via <span style="font-size: 2em;">eduroam</span>.
                 <br><br>
-                <div class="well">
-                <form action="/location/add" method="post">{% csrf_token %}
-                    {% for n in location_form %}
-                    <label>{{ n.label }}</label>
-                        {{ n }}
-                    {% endfor %}
-                    <br><br>
-                    <input class="btn" type="submit" value="Save" />
-                    <input class="btn" type="reset" value="Reset form" />
-                </form>
-                </div>
             </div>
-            <br><br><br>
-            </div>
-            {% endfor %}
-        {% endif %}
-
-
-{% endblock %}
+        </div>
+        <div class="row">
+            <div id="map_canvas" style="width:960px; height:500px;"></div>
+        </div>
+        <br><br>
+    </div>
+</div>
+</body>
+</html>
