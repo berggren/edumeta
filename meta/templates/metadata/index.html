@@ -14,6 +14,7 @@
     <link rel='stylesheet' href='/site_media/bootstrap/css/bootstrap.min.css' type='text/css'>
     <link rel='stylesheet' href='/site_media/css/style.css' type='text/css'>
     <script type="text/javascript" language="javascript" src="/site_media/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" language="javascript" src="/site_media/js/markerclusterer.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPGA6QkWXoe9VqQ5fEXt2YGUs4FTiRsQ4&sensor=false"></script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -24,16 +25,19 @@
             };
             var map = new google.maps.Map(document.getElementById("map_canvas"),
                     myOptions);
-            jQuery.getJSON("/api/v1/locations/?format=json&limit=0", function(data) {
-                $.each(data.objects, function() {
-                    var myLatlng = new google.maps.LatLng(this.latitude, this.longitude);
+            jQuery.getJSON("https://meta.eduroam.se/api/v1/locations/?format=jsonp&callback=?&limit=0", function(data) {
+                m=[];
+                for (var i =0;i<data.objects.length;++i){
+                    var myLatlng = new google.maps.LatLng(data.objects[i].latitude, data.objects[i].longitude);
                     var marker = new google.maps.Marker({
                         position: myLatlng,
                         map: map,
                         animation: google.maps.Animation.DROP,
-                        title:this.location_name_en + " - APs: " + this.ap_no
+                        title:data.objects[i].location_name_en + " - APs: " + data.objects[i].ap_no,
                     });
-                });
+                    m.push(marker);
+                }
+                var markerCluster = new MarkerClusterer(map, m);
             });
         });
     </script>

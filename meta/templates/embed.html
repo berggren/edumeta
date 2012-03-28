@@ -22,16 +22,19 @@
             };
             var map = new google.maps.Map(document.getElementById("map_canvas"),
                     myOptions);
-            jQuery.getJSON("/api/v1/locations/?format=json&limit=0", function(data) {
-                $.each(data.objects, function() {
-                    var myLatlng = new google.maps.LatLng(this.latitude, this.longitude);
+            jQuery.getJSON("https://meta.eduroam.se/api/v1/locations/?format=jsonp&callback=?&limit=0", function(data) {
+                m=[];
+                for (var i =0;i<data.objects.length;++i){
+                    var myLatlng = new google.maps.LatLng(data.objects[i].latitude, data.objects[i].longitude);
                     var marker = new google.maps.Marker({
                         position: myLatlng,
                         map: map,
                         animation: google.maps.Animation.DROP,
-                        title:this.location_name_en + " - APs: " + this.ap_no
+                        title:data.objects[i].location_name_en + " - APs: " + data.objects[i].ap_no,
                     });
-                });
+                    m.push(marker);
+                }
+                var markerCluster = new MarkerClusterer(map, m);
             });
         });
     </script>
