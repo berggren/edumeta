@@ -68,7 +68,7 @@ def contact(request, id=None):
             form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("/institution")
     return render_to_response("metadata/contact.html", {'form': form, 'contact': contact}, RequestContext(request))
 
 @login_required
@@ -93,7 +93,7 @@ def location(request, id=None):
             form = LocationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("/institution")
     return render_to_response("metadata/location.html", {'form': form, 'location': location}, RequestContext(request))
 
 @login_required
@@ -102,4 +102,12 @@ def delete_location(request, id=None):
     if not location.institution in request.user.profile.institution.all():
         raise PermissionDenied
     location.delete()
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/institution')
+
+@login_required
+def delete_contact(request, id=None):
+    contact = Contact.objects.get(pk=id)
+    if not contact.institution in request.user.profile.institution.all():
+        raise PermissionDenied
+    contact.delete()
+    return HttpResponseRedirect('/institution')

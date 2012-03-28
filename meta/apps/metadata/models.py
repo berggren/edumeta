@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.aggregates import Sum
 
 class Institution(models.Model):
     realm = models.CharField(max_length=255)
@@ -20,6 +21,8 @@ class Institution(models.Model):
         return Location.objects.filter(institution=self)
     def get_contacts(self):
         return Contact.objects.filter(institution=self)
+    def get_ap_count(self):
+        return Location.objects.filter(institution=self).aggregate(Sum('ap_no'))['ap_no__sum']
     class Admin:
         pass
 

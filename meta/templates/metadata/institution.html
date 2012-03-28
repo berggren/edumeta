@@ -9,9 +9,10 @@
                 <h3>{{ institution.org_name_en }}</h3>
                 {{ institution.street }}, {{ institution.city }} <a href="/institution/{{ institution.id }}">Edit</a><br>
                 <br>
+
                 {% if institution.get_contacts %}
                 <table class="table table-striped table-bordered">
-                <th>Name</th>
+                <th>Contact</th>
                 <th>Email</th>
                 <th>Phone</th>
                 <th></th>
@@ -23,11 +24,21 @@
                         <td><a href="/contact/{{ contact.id }}">Edit</a></td>
                     </tr>
                 {% endfor %}
+                    <tr>
+                        <td><a onclick="$('#contact_form').toggle('fast')" href="#"><i class="icon-plus-sign"></i> Add contact</a></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </table>
+                {% else %}
+                    <td><a onclick="$('#contact_form').toggle('fast')" href="#"><i class="icon-plus-sign"></i> Add contact</a></td>
                 {% endif %}
-                <a onclick="$(this).next('div.#hidetext').toggle('fast')" href="#" class="btn">+ Add contact</a>
-                <div id="hidetext" style="display:none;">
-                    <br><br>
+
+                <div id="contact_form" style="display:none;">
                     <div class="well">
+                        <h3>Add new contact for {{ institution.org_name_en }}</h3>
+                        <br>
                         <form action="/contact/add" method="post">{% csrf_token %}
                             {% for n in contact_form %}
                                 <label>{{ n.label }}</label>
@@ -39,9 +50,8 @@
                         </form>
                     </div>
                 </div>
-                <br><br>
 
-            {% if institution.get_locations %}
+                {% if institution.get_locations %}
                 <table class="table table-striped table-bordered">
                 <th>Location</th>
                 <th>Street</th>
@@ -55,15 +65,20 @@
                     <td>{{ location.city }}</td>
                     <td>{{ location.ap_no }}</td>
                     <td><a href="/location/{{ location.id }}">Edit</a></td>
-                    <td><a href="/location/{{ location.id }}">Edit</a></td>
                 </tr>
             {% endfor %}
+            <tr>
+                <td><a onclick="$('#location_form').toggle('fast')" href="#"><i class="icon-plus-sign"></i> Add location</a></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
             </table>
             {% endif %}
-                <a onclick="$(this).next('div.#hidetext').toggle('fast')" href="#" class="btn success">+ Add location</a>
-            <div id="hidetext" style="display:none;">
-                <br><br>
+            <div id="location_form" style="display:none;">
                 <div class="well">
+                <h3>Add new location for {{ institution.org_name_en }}</h3><br>
                 <form action="/location/add" method="post">{% csrf_token %}
                     {% for n in location_form %}
                     <label>{{ n.label }}</label>
@@ -75,7 +90,6 @@
                 </form>
                 </div>
             </div>
-            <br><br><br>
             </div>
             {% endfor %}
         {% endif %}

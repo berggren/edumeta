@@ -26,6 +26,7 @@ urlpatterns = patterns('',
     (r'^institution/(?P<id>[0-9]+)$',       'apps.metadata.views.institution'),
     (r'^contact/add$',                      'apps.metadata.views.contact'),
     (r'^contact/(?P<id>[0-9]+)$',           'apps.metadata.views.contact'),
+    (r'^contact/(?P<id>[0-9]+)/delete$',    'apps.metadata.views.delete_contact'),
     (r'^developer/api',                     'django.views.generic.simple.direct_to_template', {'template': 'api.html'}),
     (r'^api/',                              include(v1_api.urls)),
 

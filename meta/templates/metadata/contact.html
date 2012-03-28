@@ -2,12 +2,14 @@
 {% block title %}Edit contact{% endblock %}
 {% block content %}
                 <div class="well">
+                <a class="btn btn-danger" style="float:right;" href="/contact/{{ contact.id }}/delete"><i class="icon-white icon-trash"></i> Remove</a>
                 <form action="/contact/{{ contact.id }}" method="post">{% csrf_token %}
                     {% for n in form %}
                     <label>{{ n.label }}</label>
                         {{ n.errors }}
                         {{ n }}
                     {% endfor %}
+                    <br>
                     <input class="btn" type="submit" value="Submit" />
                 </form>
                 </div>
