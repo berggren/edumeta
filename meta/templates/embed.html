@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        #map_canvas { height: 100% }
+        #map_canvas img {
+            max-width: none;
+        }
+    </style>
+    <title>eduroam metadata</title>
+    <script type="text/javascript" language="javascript" src="/site_media/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPGA6QkWXoe9VqQ5fEXt2YGUs4FTiRsQ4&sensor=false"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var myOptions = {
+                center: new google.maps.LatLng(62.247466, 15.732422),
+                zoom: 5,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"),
+                    myOptions);
+            jQuery.getJSON("/api/v1/locations/?format=json&limit=0", function(data) {
+                $.each(data.objects, function() {
+                    var myLatlng = new google.maps.LatLng(this.latitude, this.longitude);
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        title:this.location_name_en + " - APs: " + this.ap_no
+                    });
+                });
+            });
+        });
+    </script>
+	{% block extrahead %}{% endblock %}
+</head>
+<body>
+    <div id="map_canvas" style="width:100%; height:100%;"></div>
+</body>
+</html>
