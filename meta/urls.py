@@ -29,7 +29,6 @@ urlpatterns = patterns('',
     (r'^contact/(?P<id>[0-9]+)/delete$',    'apps.metadata.views.delete_contact'),
     (r'^developer/api',                     'django.views.generic.simple.direct_to_template', {'template': 'api.html'}),
     (r'^api/',                              include(v1_api.urls)),
-
     url(r'^admin/', include(admin.site.urls)),
     (r'^accounts/logout/$',         'apps.auth.views.saml_logout'),
     (r'^site_media/(?P<path>.*)$',  'django.views.static.serve', {'document_root': '/home/jbn/stuff/work/code/edumeta/meta/static', 'show_indexes': True}),

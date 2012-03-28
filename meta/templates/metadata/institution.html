@@ -6,8 +6,17 @@
         {% else %}
             {% for institution in institutions %}
                 <div class="well" style="background: #fff;">
+                <div style="float:left">
                 <h3>{{ institution.org_name_en }}</h3>
                 {{ institution.street }}, {{ institution.city }} <a href="/institution/{{ institution.id }}">Edit</a><br>
+                </div>
+                <div style="float:right">
+                    You have <strong>{{ institution.get_ap_count }}</strong> accesspoints<br>
+                    <span class="quiet">Last updated: {{ institution.get_latest_location.last_updated|timesince }} ago</span>
+                </div>
+                <br>
+                <br>
+                <br>
                 <br>
 
                 {% if institution.get_contacts %}

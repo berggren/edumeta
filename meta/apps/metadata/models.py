@@ -23,6 +23,8 @@ class Institution(models.Model):
         return Contact.objects.filter(institution=self)
     def get_ap_count(self):
         return Location.objects.filter(institution=self).aggregate(Sum('ap_no'))['ap_no__sum']
+    def get_latest_location(self):
+        return Location.objects.filter(institution=self).latest('last_updated')
     class Admin:
         pass
 
