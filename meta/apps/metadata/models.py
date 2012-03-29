@@ -44,6 +44,7 @@ class Location(models.Model):
     institution = models.ForeignKey(Institution)
     location_name_se = models.CharField(max_length=255, null=True, blank=True)
     location_name_en = models.CharField(max_length=255, null=True, blank=True)
+    location_shortname = models.CharField(max_length=50, null=True, blank=True)
     longitude = models.CharField(max_length=255)
     latitude = models.CharField(max_length=255)
     street = models.CharField(max_length=255)
