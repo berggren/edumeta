@@ -12,7 +12,7 @@ def index(request):
     institutions = Institution.objects.all()
     locations = Location.objects.all()
     ap_no = Location.objects.all().aggregate(Sum('ap_no'))['ap_no__sum']
-    return render_to_response("metadata/index.html", {'institutions': institutions, 'locations': locations, 'ap_no': ap_no}, RequestContext(request))
+    return render_to_response("index.html", {'institutions': institutions, 'locations': locations, 'ap_no': ap_no}, RequestContext(request))
 
 @login_required
 def institution(request):
