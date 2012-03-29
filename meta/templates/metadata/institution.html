@@ -34,14 +34,14 @@
                     </tr>
                 {% endfor %}
                     <tr>
-                        <td><a onclick="$('#contact_form').toggle('fast')" href="#"><i class="icon-plus-sign"></i> Add contact</a></td>
+                        <td><a onclick="$('#contact_form_{{ institution.id }}').toggle('fast')" href="#"><i class="icon-plus-sign"></i> Add contact</a></td>
                         <td></td>
                         <td></td>
                         <td></td>
                     </tr>
                     </table>
                 {% else %}
-                    <td><a onclick="$('#contact_form').toggle('fast')" href="#"><i class="icon-plus-sign"></i> Add contact</a></td>
+                    <td><a onclick="$('#contact_form_{{ institution.id }}').toggle('fast')" href="#"><i class="icon-plus-sign"></i> Add contact</a></td>
                 {% endif %}
 
                 <div id="contact_form" style="display:none;">
