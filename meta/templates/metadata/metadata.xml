@@ -22,8 +22,8 @@
     <ts>{{ institution.get_latest_location.last_updated|date:"c" }}</ts>
     {% for location in institution.get_locations %}
     <location>
-        <latitude>{{ location.latitude }}</latitude>
         <longitude>{{ location.longitude }}</longitude>
+        <latitude>{{ location.latitude }}</latitude>
         <loc_name lang="en">{{ location.location_name_en }}</loc_name>
         <address>
             <street>{{ location.street }}</street>
