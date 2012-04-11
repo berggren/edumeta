@@ -111,3 +111,7 @@ def delete_contact(request, id=None):
         raise PermissionDenied
     contact.delete()
     return HttpResponseRedirect('/institution')
+
+def metadata(request):
+    institutions = Institution.objects.all()
+    return render_to_response("metadata/metadata.xml", {'institutions': institutions}, RequestContext(request))

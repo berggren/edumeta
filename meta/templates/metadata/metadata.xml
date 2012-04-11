@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<institutions NS0:noNamespaceSchemaLocation="institution.xsd" xmlns:NS0="http://www.w3.org/2001/XMLSchema-instance">
+{% for institution in institutions %}
+<institution>
+    <country>{{ institution.country }}</country>
+    <type>{{ institution.type }}</type>
+    <inst_realm>{{ institution.realm }}</inst_realm>
+    <org_name lang="en">{{ institution.org_name_en }}</org_name>
+    <address>
+        <street>{{ institution.street }}</street>
+        <city>{{ institution.city }}</city>
+    </address>
+    {% for contact in institution.get_contacts %}
+    <contact>
+        <name>{{ contact.name }}</name>
+        <email>{{ contact.email }}</email>
+        <phone>{{ contact.phone }}</phone>
+    </contact>
+    {% endfor %}
+    <info_URL lang="en">{{ institution.info_url_en }}</info_URL>
+    <policy_URL lang="en">{{ institution.info_url_en }}</policy_URL>
+    <ts>{{ institution.get_latest_location.last_updated|date:"c" }}</ts>
+    {% for location in institution.get_locations %}
+    <location>
+        <latitude>{{ location.latitude }}</latitude>
+        <longitude>{{ location.longitude }}</longitude>
+        <loc_name lang="en">{{ location.location_name_en }}</loc_name>
+        <address>
+            <street>{{ location.street }}</street>
+            <city>{{ location.city }}</city>
+        </address>
+        <SSID>{{ location.ssid }}</SSID>
+        <enc_level>{{ location.enc_level }}</enc_level>
+        <port_restrict>{{ location.port_restrict|yesno:"true,false" }}</port_restrict>
+        <transp_proxy>{{ location.transp_proxy|yesno:"true,false" }}</transp_proxy>
+        <IPv6>{{ location.ipv6|yesno:"true,false" }}</IPv6>
+        <NAT>{{ location.nat|yesno:"true,false" }}</NAT>
+        <AP_no>{{ location.ap_no }}</AP_no>
+        <wired>{{ location.wired|yesno:"true,false" }}</wired>
+        <info_URL lang="en">{{ location.info_url_en }}</info_URL>
+    </location>
+    {% endfor %}
+</institution>
+{% endfor %}
+</institutions>
