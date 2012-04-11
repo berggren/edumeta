@@ -112,10 +112,6 @@ def delete_contact(request, id=None):
 
 def metadata(request):
     institutions = Institution.objects.all()
-    return render_to_response("metadata/metadata.xml", {'institutions': institutions}, RequestContext(request))
-
-def metadata2(request):
-    institutions = Institution.objects.all()
     t = loader.get_template("metadata/metadata.xml")
     c = Context({"institutions": institutions})
     return HttpResponse(t.render(c), mimetype="text/xml")
