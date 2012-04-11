@@ -1,9 +1,7 @@
-from django.contrib.auth import logout
 from django.core.exceptions import PermissionDenied
-from django.db.models.aggregates import Sum
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.template import RequestContext, loader, Context
 from django.contrib.auth.decorators import login_required
 from models import *
 from forms import *
@@ -115,3 +113,9 @@ def delete_contact(request, id=None):
 def metadata(request):
     institutions = Institution.objects.all()
     return render_to_response("metadata/metadata.xml", {'institutions': institutions}, RequestContext(request))
+
+def metadata2(request):
+    institutions = Institution.objects.all()
+    t = loader.get_template("metadata/metadata.xml")
+    c = Context({"institutions": institutions})
+    return HttpResponse(t.render(c), mimetype="text/xml")
