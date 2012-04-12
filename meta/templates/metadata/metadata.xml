@@ -2,9 +2,9 @@
 <institutions NS0:noNamespaceSchemaLocation="institution.xsd" xmlns:NS0="http://www.w3.org/2001/XMLSchema-instance">
 {% for institution in institutions %}
 <institution>
-    <country>{{ institution.country }}</country>
+    <country>{{ institution.country|lower }}</country>
     <type>{{ institution.type }}</type>
-    <inst_realm>{{ institution.realm }}</inst_realm>
+    <inst_realm>{{ institution.realm|lower }}</inst_realm>
     <org_name lang="en">{{ institution.org_name_en }}</org_name>
     <address>
         <street>{{ institution.street }}</street>
