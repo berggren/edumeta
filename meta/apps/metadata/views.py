@@ -11,7 +11,7 @@ def index(request):
     locations = Location.objects.all()
     ap_no = Location.objects.all().aggregate(Sum('ap_no'))['ap_no__sum']
     ap_no_v6 = Location.objects.filter(ipv6=True).aggregate(Sum('ap_no'))['ap_no__sum']
-    return render_to_response("index.html", {'institutions': institutions, 'locations': locations, 'ap_no': ap_no,'ap_no_v6_p:float(ap_no_v6)/float(ap_no)*100}, RequestContext(request))
+    return render_to_response("index.html", {'institutions': institutions, 'locations': locations, 'ap_no': ap_no,'ap_no_v6_p':float(ap_no_v6)/float(ap_no)*100}, RequestContext(request))
 
 @login_required
 def institution(request):
