@@ -59,8 +59,8 @@
             </div>
             <br><br><br>
             <div class="well">
-                We have <span style="font-size: 2em;">{{ institutions|length }}</span> institutions, <span style="font-size: 2em;">{{ locations|length }}</span> locations with <span style="font-size: 3em;">{{ ap_no }}</span> accesspoints giving you love and connectivity via <span style="font-size: 2em;">eduroam</span><br>
-		Hey, <span style="font-size: 2em;">{{ap_no_v6_p|floatformat}}%</span> of those accesspoints are ipv6 enabled. Come on Sweden, we can do better.
+                We have <span style="font-size: 2em;">{{ institutions|length }}</span> institutions, <span style="font-size: 2em;">{{ locations|length }}</span> locations with <span style="font-size: 3em;">{{ ap_no }}</span> accesspoints giving you love and connectivity via <span style="font-size: 2em;">eduroam.</span><br>
+                <br><span style="color:#999;">Hey, wait a minute.. only </span><strong>{{ap_no_v6_p|floatformat}}%</strong><span style="color:#999;"> of those accesspoints are </span>ipv6<span style="color:#999;"> enabled. Come on Sweden, we can do better.</span>
                 <br><br>
             </div>
         </div>
