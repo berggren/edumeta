@@ -32,6 +32,7 @@ urlpatterns = patterns('',
     (r'^embed',                             'django.views.generic.simple.direct_to_template', {'template': 'embed.html'}),
     (r'^api/',                              include(v1_api.urls)),
     url(r'^admin/',                         include(admin.site.urls)),
+    (r'^accounts/login-federated/$',        'apps.auth.views.saml_login'),
     (r'^accounts/logout/$',                 'apps.auth.views.saml_logout'),
     (r'^site_media/(?P<path>.*)$',          'django.views.static.serve', {'document_root': '/home/jbn/stuff/work/code/edumeta/meta/static', 'show_indexes': True}),
 )

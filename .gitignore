@@ -2,3 +2,6 @@ settings.py
 .idea
 *.pyc
 database.db
+edumeta.db
+venv
+django.log
