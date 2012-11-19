@@ -34,5 +34,5 @@ urlpatterns = patterns('',
     url(r'^admin/',                         include(admin.site.urls)),
     (r'^accounts/login-federated/$',        'apps.auth.views.saml_login'),
     (r'^accounts/logout/$',                 'apps.auth.views.saml_logout'),
-    (r'^site_media/(?P<path>.*)$',          'django.views.static.serve', {'document_root': '/home/jbn/stuff/work/code/edumeta/meta/static', 'show_indexes': True}),
+    (r'^site_media/(?P<path>.*)$',          'django.views.static.serve', {'document_root': '/home/paul/eduroam/edumeta/meta/static', 'show_indexes': True}),
 )
