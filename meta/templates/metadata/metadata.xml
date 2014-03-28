@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <institutions NS0:noNamespaceSchemaLocation="institution.xsd" xmlns:NS0="http://www.w3.org/2001/XMLSchema-instance">
 {% for institution in institutions %}
+{% if institution.get_contacts and institution.get_locations %}
 <institution>
     <country>{{ institution.country|lower }}</country>
     <type>{{ institution.type }}</type>
@@ -41,5 +42,6 @@
     </location>
     {% endfor %}
 </institution>
+{% endif %}
 {% endfor %}
 </institutions>

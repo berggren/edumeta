@@ -3,6 +3,9 @@
 {% block content %}
     <h3>{{ location.location_name }}</h3>
                 <br>
+		{% if form.errors %}
+			{{ form.errors }}
+		{% endif %}
                 <div class="well">
                 <a class="btn btn-danger" style="float:right;" href="/location/{{ location.id }}/delete"><i class="icon-white icon-trash"></i> Remove</a>
                 <form action="/location/{{ location.id }}" method="post">{% csrf_token %}

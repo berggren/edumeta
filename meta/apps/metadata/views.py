@@ -93,6 +93,8 @@ def location(request, id=None):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect("/institution")
+	else: 
+	    print form.errors
     return render_to_response("metadata/location.html", {'form': form, 'location': location}, RequestContext(request))
 
 @login_required
